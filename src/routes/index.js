@@ -9,6 +9,7 @@ admin.initializeApp({
 
 const db = admin.database();
 
+//Retorna todos los datos
 router.get("/all", (req, res) => {
   db.ref("data").once("value", (snapshot) => {
     const data = snapshot.toJSON();
@@ -16,6 +17,7 @@ router.get("/all", (req, res) => {
   });
 });
 
+//Retorna el ultimo dato
 router.get("/last", (req, res) => {
   db.ref("data")
     .orderByKey()
@@ -26,6 +28,7 @@ router.get("/last", (req, res) => {
     });
 });
 
+//Retorna los datos de la ultima hora
 router.get("/lasthour", (req, res) => {
   db.ref("data")
     .orderByKey()
@@ -36,6 +39,7 @@ router.get("/lasthour", (req, res) => {
     });
 });
 
+//Retorna la cantidad de datos
 router.get("/cont", (req, res) => {
   db.ref("data").once("value", (snapshot) => {
     const data = snapshot.val();
@@ -43,6 +47,7 @@ router.get("/cont", (req, res) => {
   });
 });
 
+//Retorna los n cantidad de datos desde la cola
 router.get("/limitlast/:num", (req, res) => {
   db.ref("data")
     .orderByKey()
@@ -53,6 +58,7 @@ router.get("/limitlast/:num", (req, res) => {
     });
 });
 
+//Agrega un nuevo dato 
 router.post("/add", (req, res) => {
   const { hour, humidity, hydrometer, localDate, temperature } = req.body;
   const newData = {
