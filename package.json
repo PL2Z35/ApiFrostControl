@@ -1,0 +1,30 @@
+{
+  "name": "apifrostcontrol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PL2Z35/ApiFrostControl.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PL2Z35/ApiFrostControl/issues"
+  },
+  "homepage": "https://github.com/PL2Z35/ApiFrostControl#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "firebase-admin": "^10.0.2",
+    "morgan": "^1.10.0",
+    "serialport": "^10.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
