@@ -58,8 +58,8 @@ router.get("/limitlast/:num", (req, res) => {
     });
 });
 
-//Agrega un nuevo dato 
-router.post("/add", (req, res) => {
+//Agrega un nuevo dato
+router.post("/", (req, res) => {
   const { hour, humidity, hydrometer, localDate, temperature } = req.body;
   const newData = {
     hour,
@@ -68,12 +68,45 @@ router.post("/add", (req, res) => {
     localDate,
     temperature,
   };
-  if (hour && humidity && hydrometer && localDate && temperature) {
-    db.ref("data").push(newData);
-    res.send("successfully added");
-  } else {
-    res.send("wrong request");
-  }
+  db.ref("data")
+    .push(newData)
+    .then(() => {
+      res.send({ status: true });
+    })
+    .catch(() => {
+      res.send(console.error);
+    });
 });
 
+//Modificar un dato
+router.put("/:key", (req, res) => {
+  const { hour, humidity, hydrometer, localDate, temperature } = req.body;
+  const newData = {
+    hour,
+    humidity,
+    hydrometer,
+    localDate,
+    temperature,
+  };
+  db.ref("data/" + req.params.key)
+    .set(newData)
+    .then(() => {
+      res.send({ status: true });
+    })
+    .catch(() => {
+      res.send(console.error);
+    });
+});
+
+//Borrar un dato
+router.delete("/:key", (req, res) => {
+  db.ref("data/" + req.params.key)
+    .remove()
+    .then(() => {
+      res.send({ status: true });
+    })
+    .catch(() => {
+      res.send(console.error);
+    });
+});
 module.exports = router;

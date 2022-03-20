@@ -17,12 +17,22 @@ const db = admin.database();
 
 port.on('open', async() => {
     console.log('Serial Port  COM3 is opened.');
+    db.ref('connections').push(connection(true));
+    db.ref('data').push(jsonconver(data))
     leer();
 }).on('error', async(err) => {
+    try {
+        console.log(data)
+        db.ref('connections').push(connection(true));
+    } catch (error) {
+        db.ref('connections').push(connection(false));
+    }
     console.error(err);
 });
 
 const leer = async() => parser.on('data', (data) => {
+    console.log("aasas")
+    console.log(data)
     if (i === 30) {
         db.ref('data').push(jsonconver(data))
         i = 1;
@@ -30,6 +40,16 @@ const leer = async() => parser.on('data', (data) => {
         i++;
     }
 });
+
+function connection(status){
+    var fecha = new Date()
+    const connect = {
+        "localDate": fecha.toLocaleDateString(),
+        "localhour": fecha.toLocaleTimeString(),
+        "status": status
+    }
+    return connect;
+}
 
 function jsonconver(data) {
     const con = data.split(',');
